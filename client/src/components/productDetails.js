@@ -17,10 +17,21 @@ const ProductDetails = (props) => {
         });
     }, []);
     
+    const deleteProduct = () => {
+        axios.delete('http://localhost:8000/api/productmanager/' + id)
+            .then((res) => {
+                console.log(res.data);
+                navigate('/');
+            })
+            .catch((err) => {
+                console.log(err);
+                navigate('/');
+            })
+        }
+        
     return ( 
         <div>
-            <h1>{ product.name }</h1>
-            <img src={product.imageUrl } alt={product.name} style={{maxWidth:"200px"}}/>
+            <h1>{ product.title }</h1>
             <p>
                 Title: {product.title}
             </p>
@@ -30,6 +41,7 @@ const ProductDetails = (props) => {
             <p>
                 Description: {product.description}
             </p>
+            <button className="deleteBtn" onClick={ deleteProduct }>Delete Product </button>
         </div>
     )
 }
