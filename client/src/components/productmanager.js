@@ -1,9 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import {link, navigate} from '@reach/router';
+import AllProducts from './allProducts'
 
-const NewProductManager = (props) => {
-    const [ newProductManager, setProductManager] = useState({
+const NewProduct = (props) => {
+    const [ newProduct, setNewProduct] = useState({
         title: "",
         price: "",
         description: ""
@@ -15,16 +16,16 @@ const NewProductManager = (props) => {
         console.log("input value: " + e.target.value)
         const inputValue = e.target.value;
         // ... creates a copy of the entire newHero Object and puts the copy in updatedHero 
-        let updateProductManager = {...newProductManager}
+        let updateProductManager = {...newProduct}
         updateProductManager[inputName] = inputValue;
 
-        setProductManager(updateProductManager)
+        setNewProduct(updateProductManager)
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:8000/api/productmanager', newProductManager)
+        axios.post('http://localhost:8000/api/productmanager', newProduct)
             .then((res) => {
             console.log(res.data);
             // navigate("/");
@@ -45,7 +46,7 @@ const NewProductManager = (props) => {
                     <input
                     type="text"
                     name="title"
-                    value= { newProductManager.title}
+                    value= { newProduct.title}
                     onChange= {(e) => inputChange(e) }/>
                 </div>
                 <div>
@@ -53,7 +54,7 @@ const NewProductManager = (props) => {
                     <input
                     type="integer"
                     name="price"
-                    value= { newProductManager.price}
+                    value= { newProduct.price}
                     onChange= {(e) => inputChange(e) }/>
                 </div>
                 <div>
@@ -61,13 +62,14 @@ const NewProductManager = (props) => {
                     <input
                     type="text"
                     name="description"
-                    value= { newProductManager.description}
+                    value= { newProduct.description}
                     onChange= {(e) => inputChange(e) }/>
                 </div>
                 <button>Create </button>
             </form>
+            <AllProducts/>
         </div>
     )
 }
 
-export default NewProductManager;
+export default NewProduct;
