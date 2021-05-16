@@ -36,5 +36,34 @@ module.exports = {
                 res.status(500).json(err);
             })
     },
+    update: (req, res) => {
+        console.log(req.body); //this will print the json object that we want to add to the DB
+        Productmanager.findByIdAndUpdate(req.params.id, req.body, {
+            new: true, 
+            runValidators: true, //validators do not work by default, need to set to True
+        })
+            .then((updatedProduct) => {
+                console.log("In Update");
+                res.json(updatedProduct);
+            })
+            .catch((err) => {
+                console.log("Error within update");
+                res.status(500).json(err);
+            })
+    },
+    // delete superhero document
+    delete: (req, res) => {
+        console.log("delete ID: " + req.params.id);
+        Productmanager.findByIdAndDelete(req.params.id)
+            .then((deletedProduct) => {
+                console.log("In delete");
+                res.json(deletedProduct);
+            }) 
+            .catch((err) => {
+                console.log("Error within delete");
+                res.status(500).json(err);
+            });
+    }
+
 
 }
